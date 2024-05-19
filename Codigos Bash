@@ -24,3 +24,18 @@ echo "Cantidad de contraseñas en el diccionario modificado: $total_passwords"
 # Mostrar las primeras 10 contraseñas modificadas
 head -n 10 ~/Downloads/rockyou_mod.dic
 
+Parte3
+
+tranformacion de .pcap a .22000
+hcxpcapngtool -o /home/benjaminescandar/Descargas/handshake.22000 /home/benjaminescandar/Descargas/handshake.pcap
+
+hashcat con potfile
+hashcat -m 22000 -a 0 /home/benjaminescandar/Descargas/handshake.22000 ~/Descargas/rockyou_mod.dic --potfile-path=./hashcat.potfile
+hashcat -m 22000 -a 3 /home/benjaminescandar/Descargas/handshake.22000 ~/Descargas/rockyou_mod.dic --potfile-path=./hashcat.potfile (el 3 es de fuerza bruta)
+
+hashcat sin potfile
+hashcat -m 22000 -a 0 /home/benjaminescandar/Descargas/handshake.22000 ~/Descargas/rockyou_mod.dic --potfile-disable
+hashcat -m 22000 -a 3 /home/benjaminescandar/Descargas/handshake.22000 ~/Descargas/rockyou_mod.dic --potfile-disable (el 3 es de fuerza bruta)
+
+aircrack
+aircrack-ng -w ~/Descargas/rockyou_mod.dic /home/benjaminescandar/Descargas/handshake.pcap
